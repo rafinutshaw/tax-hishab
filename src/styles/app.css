@@ -1,0 +1,54 @@
+.form-field {
+  outline: 0px;
+  /* height: 44px; */
+  padding: 0.2rem 1.25rem;
+  border-color: var(--gray-400);
+  border-width: 1px;
+  width: 100%;
+  font-size: 0.875rem;
+  border-radius: 10px;
+}
+.form-field:focus {
+  outline: 0px;
+}
+.form-field:not([readonly]):focus {
+  outline: 0px;
+  border: 1px solid var(--black-400);
+}
+.form-field:read-only {
+  background-color: var(--gray-300);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill::first-line,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:hover::first-line,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+.btn {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-weight: 700;
+  --tw-text-opacity: 1;
+  color: var(--gray-400);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  border-width: 1px;
+  border-color: var(--gray-400);
+}
+
+.btn-red {
+  border: 0;
+  color: white;
+  background-color: var(
+    --red-400
+  ); /* For browsers that do not support gradients */
+  background-image: linear-gradient(to right, var(--red-400), var(--red-800));
+}

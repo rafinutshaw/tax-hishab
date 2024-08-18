@@ -1,0 +1,23 @@
+:root {
+  --font-size: 16px;
+
+  --black-400: #222222;
+  --black-200: #2f3043;
+  --black-300: #666666;
+  --black-100: #7f7f7f;
+
+  --blue-300: #3e89ff;
+
+  --red-100: #fbeef2;
+  --red-400: #ed1c24;
+  --red-800: #9d0b0f;
+
+  --gray-100: #fcfcfc;
+  --gray-200: #f5f5f5;
+  --gray-300: #eaeaea;
+  --gray-400: #bdbdbe;
+
+  --violet-400: #842e62;
+
+  --green-400: #00ac4d;
+}
