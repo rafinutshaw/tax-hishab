@@ -139,7 +139,7 @@ const TaxResult: React.FC<TaxResultProps> = ({
               <td>{taxableIncome * (3 / 100)} </td>
             </tr>
             <tr>
-              <td>Investments's 15%</td>
+              <td>Investments&apos;s 15%</td>
               <td>{investments * (15 / 100)} </td>
             </tr>
             <tr>

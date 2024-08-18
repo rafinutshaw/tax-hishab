@@ -11,7 +11,7 @@ type Perticular = {
   maximum?: number;
 };
 
-function index() {
+function Index() {
   const methods = useForm();
   const [resultInput, setResultInput] = useState({
     taxFreeIncome: 350000,
@@ -97,4 +97,4 @@ function index() {
   );
 }
 
-export default index;
+export default Index;

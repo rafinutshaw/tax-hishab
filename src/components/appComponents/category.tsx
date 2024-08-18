@@ -28,7 +28,7 @@ function Category() {
           <div className="font-bold"> Tax Free Income</div>
         </div>
         {Categories.map((item) => (
-          <div>
+          <div key={item.amount}>
             <input
               type="radio"
               id={item.amount.toString()}
