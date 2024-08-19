@@ -2,7 +2,7 @@ import Category from "@/components/appComponents/category";
 import InputTable from "@/components/appComponents/inputTable";
 import TaxResult from "@/components/appComponents/taxResult";
 import UnfitChild from "@/components/appComponents/unfitChild";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 type Perticular = {
@@ -19,13 +19,18 @@ function Index() {
     investments: 1180000,
     advancedIncomeTax: 18000,
   });
+  const resultRef = useRef<HTMLDivElement>(null);
+
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { watch } = methods;
   const formValues = watch();
   console.log(formValues);
 
-  const onSubmit = (formValues: any) => {
+  const onSubmit = (_: any) => {
     setIsSubmitted(true);
+    setTimeout(() => {
+      if (resultRef?.current) resultRef.current.scrollIntoView();
+    }, 500);
   };
 
   const SalaryPerticulars: Perticular[] = [
@@ -84,15 +89,17 @@ function Index() {
           </button>
         </form>
       </FormProvider>
-      {isSubmitted && (
-        <TaxResult
-          taxFreeIncome={formValues.category}
-          income={netIncome(SalaryPerticulars, "total_")}
-          investments={netIncome(InvestmentPerticulars)}
-          advanceIncomeTax={formValues.advanceIncomeTax}
-          unfitChild={formValues.unfitCount}
-        />
-      )}
+      <div ref={resultRef}>
+        {isSubmitted && (
+          <TaxResult
+            taxFreeIncome={formValues.category}
+            income={netIncome(SalaryPerticulars, "total_")}
+            investments={netIncome(InvestmentPerticulars)}
+            advanceIncomeTax={formValues.advanceIncomeTax}
+            unfitChild={formValues.unfitCount}
+          />
+        )}
+      </div>
     </div>
   );
 }
