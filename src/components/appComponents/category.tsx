@@ -21,7 +21,7 @@ function Category() {
   ];
   return (
     <div className=" mb-2">
-      <div className="font-bold text-xl mb-2">Category Information</div>
+      <div className="font-bold text-xl mb-2">General Information</div>
       <div>
         <div className="inline-flex">
           <div className="w-64 mr-3 font-bold"> Category Name</div>

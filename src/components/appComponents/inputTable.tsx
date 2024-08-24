@@ -140,32 +140,6 @@ const InputTable: React.FC<InputTableProps> = ({
               />
             </td>
           </tr>
-          {!showMax && (
-            <Fragment>
-              <tr>
-                <td>
-                  <div className="w-44">Advance Income Tax</div>
-                </td>
-                <td>
-                  <input
-                    className="text-right form-field"
-                    defaultValue={0}
-                    {...register(`advanceIncomeTax`, {
-                      required: "This field is required.",
-                      min: 0,
-                    })}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  {errors.advanceIncomeTax && (
-                    <span>This field is required</span>
-                  )}
-                </td>
-              </tr>
-            </Fragment>
-          )}
         </tbody>
       </table>
 

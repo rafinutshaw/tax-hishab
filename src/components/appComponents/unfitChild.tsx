@@ -21,6 +21,19 @@ function UnfitChild() {
       <div className="italic">
         Tax rebate of 50000 BDT for each physical or mentally unfit child
       </div>
+      <div className="flex mb-2">
+        <div className="w-80">Advanced income tax </div>
+        <div>
+          <input
+            className="text-right form-field"
+            defaultValue={0}
+            {...register(`advanceIncomeTax`, {
+              required: "This field is required.",
+              min: 0,
+            })}
+          />
+        </div>
+      </div>
     </div>
   );
 }
