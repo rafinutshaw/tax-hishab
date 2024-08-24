@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 
 type TaxResultProps = {
   income: number;
-  taxFreeIncome: number;
+  taxFreeIncomeByCategory: number;
   investments: number;
   advanceIncomeTax: number;
   unfitChild: number;
 };
-
+const maxTaxFreeIncome = 450000;
 const TaxResult: React.FC<TaxResultProps> = ({
   income,
-  taxFreeIncome,
+  taxFreeIncomeByCategory,
   investments,
   advanceIncomeTax,
   unfitChild,
@@ -18,9 +18,15 @@ const TaxResult: React.FC<TaxResultProps> = ({
   const [totalTax, setTotalTax] = useState(0);
   const [slabData, setSlabData] = useState<any>();
   const [totalRebate, setTotalRebate] = useState(0);
-  console.log(income, taxFreeIncome, investments, advanceIncomeTax, unfitChild);
-  const taxableIncome =
-    income - Math.min(+taxFreeIncome + +unfitChild * 50000, income / 3);
+  console.log(
+    income,
+    taxFreeIncomeByCategory,
+    investments,
+    advanceIncomeTax,
+    unfitChild
+  );
+  const taxableIncome = income - Math.min(maxTaxFreeIncome, income / 3);
+  // income - Math.min(+taxFreeIncomeByCategory + +unfitChild * 50000, income / 3);
 
   const getSlabData = () => {
     const SLABS = [
@@ -28,7 +34,7 @@ const TaxResult: React.FC<TaxResultProps> = ({
         rate: 0,
         remaining: 0,
         taxableAmount: 0,
-        amount: 350000,
+        amount: +taxFreeIncomeByCategory + +unfitChild * 50000,
       },
       { amount: 100000, rate: 5 },
       { amount: 400000, rate: 10 },
@@ -51,7 +57,7 @@ const TaxResult: React.FC<TaxResultProps> = ({
             ? (item.amount * item.rate) / 100
             : (SLABS[index - 1].remaining! * item.rate) / 100;
         item.remaining =
-          item.amount < SLABS[index - 1].remaining!
+          SLABS[index - 1].remaining! > item.amount
             ? SLABS[index - 1].remaining! - item.amount
             : 0;
       }
@@ -86,17 +92,12 @@ const TaxResult: React.FC<TaxResultProps> = ({
               <td> {income / 3}</td>
             </tr>
             <tr>
-              <td>
-                Tax free income based on category and physically or mentally
-                unfit children:
-              </td>
-              <td>{+taxFreeIncome + +unfitChild * 50000}</td>
+              <td>Maximum tax free income:</td>
+              <td>{maxTaxFreeIncome}</td>
             </tr>
             <tr>
               <td>Your Applicable Taxable Free Income</td>
-              <td>
-                {Math.min(+taxFreeIncome + +unfitChild * 50000, income / 3)}
-              </td>
+              <td>{Math.min(maxTaxFreeIncome, income / 3)}</td>
             </tr>
 
             <tr>
@@ -123,7 +124,7 @@ const TaxResult: React.FC<TaxResultProps> = ({
                 <td>{item.amount}</td>
                 <td>{item.rate}%</td>
                 <td>{item.taxableAmount}</td>
-                <td>{item.remaining}</td>
+                <td className="text-right">{item.remaining}</td>
               </tr>
             ))}
           </tbody>

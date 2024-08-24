@@ -92,7 +92,7 @@ function Index() {
       <div ref={resultRef}>
         {isSubmitted && (
           <TaxResult
-            taxFreeIncome={formValues.category}
+            taxFreeIncomeByCategory={formValues.category}
             income={netIncome(SalaryPerticulars, "total_")}
             investments={netIncome(InvestmentPerticulars)}
             advanceIncomeTax={formValues.advanceIncomeTax}
