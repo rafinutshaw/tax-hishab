@@ -78,7 +78,13 @@ const TaxResult: React.FC<TaxResultProps> = ({
     setSlabData(data.SLABS);
     setTotalTax(data.caltotalTax);
     calculateTotalRebate();
-  }, []);
+  }, [
+    income,
+    taxFreeIncomeByCategory,
+    investments,
+    advanceIncomeTax,
+    unfitChild,
+  ]);
   return (
     <div className="mb-8 border rounded p-4">
       <div className="border p-2 mb-2">
