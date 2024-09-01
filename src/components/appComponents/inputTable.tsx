@@ -1,6 +1,8 @@
-import { useForm, useFormContext } from "react-hook-form";
+import { Controller, useForm, useFormContext } from "react-hook-form";
 import { Particular } from "./sharedTypes";
 import { Fragment, useEffect } from "react";
+import InfoBar from "../genericComponents/info/info.bar";
+import CurrencyInput from "../genericComponents/currency.input/currency.input";
 
 type InputTableProps = {
   particulars: Particular[];
@@ -13,28 +15,22 @@ const InputTable: React.FC<InputTableProps> = ({
   particulars,
   showMax = false,
   title,
-  amountType,
 }) => {
   const {
     register,
-    handleSubmit,
     setValue,
     watch,
+    control,
     formState: { errors },
   } = useFormContext();
   const formValues = watch();
   console.log(formValues);
-
   const netIncome = () => {
     let total = 0;
     particulars.map((item) => {
       total += formValues[`${!showMax ? "total_" : ""}${item.code}`]
         ? parseInt(formValues[`${!showMax ? "total_" : ""}${item.code}`])
         : 0;
-      if (item.code == "advanceIncomeTax") {
-        total -=
-          2 * parseInt(formValues[`${!showMax ? "total_" : ""}${item.code}`]);
-      }
     });
 
     // setValue("total_" + amountType, total);
@@ -56,11 +52,11 @@ const InputTable: React.FC<InputTableProps> = ({
         <thead>
           <tr>
             <th></th>
-            <th>Amount</th>
+            <th>Amount (BDT)</th>
             {showMax && (
               <>
-                <th>Applicable Amount</th>
-                <th>Max Applicable Amount</th>
+                <th>Applicable Amount (BDT)</th>
+                <th>Max Applicable Amount (BDT)</th>
               </>
             )}
           </tr>
@@ -73,27 +69,32 @@ const InputTable: React.FC<InputTableProps> = ({
                   <div className="w-44">{item.title}</div>{" "}
                 </td>
                 <td>
-                  <input
-                    className="text-right form-field"
-                    defaultValue={0}
-                    {...register(`total_${item.code}`, {
+                  <Controller
+                    control={control}
+                    rules={{
                       required: "This field is required.",
                       min: 0,
-                      onChange(event) {
-                        if (showMax)
-                          getApplicableAmount(item, event.target.value);
-                        // setValue(item.code, event.target.value);
-                      },
-                    })}
+                    }}
+                    defaultValue={0}
+                    name={`total_${item.code}`}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <CurrencyInput
+                        className="text-right form-field"
+                        onValueChange={(value: any, name: any, values: any) => {
+                          onChange(value);
+                          if (showMax) getApplicableAmount(item, value);
+                        }}
+                      />
+                    )}
                   />
                 </td>
                 {showMax && (
                   <>
                     <td>
-                      <input
+                      <CurrencyInput
                         className="text-right form-field"
-                        defaultValue={0}
                         readOnly
+                        value={formValues[item.code]}
                         {...register(item.code, {
                           required: "This field is required.",
                           min: 0,
@@ -101,11 +102,16 @@ const InputTable: React.FC<InputTableProps> = ({
                       />
                     </td>
                     <td>
-                      <input
-                        className="text-right form-field"
-                        value={item.maximum}
-                        readOnly
-                      />
+                      {item.maximum && (
+                        <InfoBar
+                          heading={"Maximum"}
+                          message={
+                            item.maximum?.toLocaleString(undefined, {
+                              maximumFractionDigits: 2,
+                            })!
+                          }
+                        />
+                      )}
                     </td>
                   </>
                 )}
@@ -136,7 +142,9 @@ const InputTable: React.FC<InputTableProps> = ({
               <input
                 readOnly
                 className="text-right form-field"
-                value={netIncome()}
+                value={netIncome().toLocaleString(undefined, {
+                  maximumFractionDigits: 2,
+                })}
               />
             </td>
           </tr>

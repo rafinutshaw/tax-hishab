@@ -38,7 +38,12 @@ function Category() {
             <label className="ml-4" htmlFor={item.amount.toString()}>
               <div className="inline-flex">
                 <div className="w-60"> {item.title}</div>
-                <div> {item.amount} BDT</div>
+                <div>
+                  {item.amount.toLocaleString(undefined, {
+                    maximumFractionDigits: 2,
+                  })}{" "}
+                  BDT
+                </div>
               </div>
             </label>
           </div>

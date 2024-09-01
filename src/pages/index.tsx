@@ -22,10 +22,13 @@ function Index() {
   const resultRef = useRef<HTMLDivElement>(null);
 
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const { watch } = methods;
+  const {
+    watch,
+    formState: { errors },
+  } = methods;
   const formValues = watch();
-  console.log(formValues);
-
+  // console.log(formValues);
+  console.log(errors);
   const onSubmit = (_: any) => {
     setIsSubmitted(true);
     setTimeout(() => {
@@ -69,20 +72,22 @@ function Index() {
     <div>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <InputTable
-            amountType="salary"
-            title="Salary Information"
-            particulars={SalaryPerticulars}
-          />
-          <InputTable
-            amountType="investment"
-            title="Investment Information"
-            showMax={true}
-            particulars={InvestmentPerticulars}
-          />
-          <div className="border rounded mb-8 p-4">
-            <Category />
-            <UnfitChild />
+          <div className="flex flex-wrap gap-4">
+            <InputTable
+              amountType="salary"
+              title="Salary Information"
+              particulars={SalaryPerticulars}
+            />
+            <InputTable
+              amountType="investment"
+              title="Investment Information"
+              showMax={true}
+              particulars={InvestmentPerticulars}
+            />
+            <div className="border rounded mb-8 p-4">
+              <Category />
+              <UnfitChild />
+            </div>
           </div>
           <button className="btn btn-red mb-8" type="submit">
             Calculate
